@@ -3,24 +3,23 @@ package contributors
 import contributors.Contributors.LoadingStatus.*
 import contributors.Variant.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.swing.Swing
 import tasks.*
 import java.awt.event.ActionListener
 import javax.swing.SwingUtilities
 import kotlin.coroutines.CoroutineContext
 
 enum class Variant {
-    BLOCKING,         // Request1Blocking
-    BACKGROUND,       // Request2Background
-    CALLBACKS,        // Request3Callbacks
-    SUSPEND,          // Request4Coroutine
-    CONCURRENT,       // Request5Concurrent
-    NOT_CANCELLABLE,  // Request6NotCancellable
-    PROGRESS,         // Request6Progress
-    CHANNELS          // Request7Channels
+    BLOCKING, // Request1Blocking
+    BACKGROUND, // Request2Background
+    CALLBACKS, // Request3Callbacks
+    SUSPEND, // Request4Coroutine
+    CONCURRENT, // Request5Concurrent
+    NOT_CANCELLABLE, // Request6NotCancellable
+    PROGRESS, // Request6Progress
+    CHANNELS // Request7Channels
 }
 
-interface Contributors: CoroutineScope {
+interface Contributors : CoroutineScope {
 
     val job: Job
 
@@ -99,7 +98,7 @@ interface Contributors: CoroutineScope {
                     }
                 }.setUpCancellation()
             }
-            CHANNELS -> {  // Performing requests concurrently and showing progress
+            CHANNELS -> { // Performing requests concurrently and showing progress
                 launch(Dispatchers.Default) {
                     loadContributorsChannels(service, req) { users, completed ->
                         withContext(Dispatchers.Main) {
@@ -141,11 +140,11 @@ interface Contributors: CoroutineScope {
         } else ""
 
         val text = "Loading status: " +
-                when (status) {
-                    COMPLETED -> "completed in $time"
-                    IN_PROGRESS -> "in progress $time"
-                    CANCELED -> "canceled"
-                }
+            when (status) {
+                COMPLETED -> "completed in $time"
+                IN_PROGRESS -> "in progress $time"
+                CANCELED -> "canceled"
+            }
         setLoadingStatus(text, status == IN_PROGRESS)
     }
 
@@ -178,8 +177,7 @@ interface Contributors: CoroutineScope {
         val params = getParams()
         if (params.username.isEmpty() && params.password.isEmpty()) {
             removeStoredParams()
-        }
-        else {
+        } else {
             saveParams(params)
         }
     }
